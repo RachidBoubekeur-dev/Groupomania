@@ -1,6 +1,7 @@
 <template>
-  <div class="hello">
-    <p>Profil</p>
+  <div>
+    <div class="form-check">
+    </div>
   </div>
 </template>
 

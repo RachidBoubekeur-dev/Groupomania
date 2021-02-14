@@ -1,12 +1,13 @@
 <template>
   <div>
-    <p>Chat</p>
+    <div class="form-check">
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ChatComp'
+  name: 'SignupComp'
 }
 </script>
 

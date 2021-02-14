@@ -18,8 +18,11 @@
                 <li class="nav-item">
                   <router-link to="/article" class="nav-link">Article</router-link>
                 </li>
-                <li class="nav-item position-md-absolute right-2">
+                <li class="nav-item position-md-absolute right-2" v-if="userId !== null">
                   <router-link to="/profil" class="nav-link">Profil</router-link>
+                </li>
+                <li class="nav-item position-md-absolute right-2" v-else>
+                  <router-link to="/login" class="nav-link">Login</router-link>
                 </li>
             </ul>
           </div>
@@ -29,22 +32,29 @@
       <router-view />
     </main>
     <footer>
-      <p class="fixed-bottom">© {{ $store.state.year }} Groupomania.</p>
+      <p class="fixed-bottom font-weight-bold">© {{ year }} Groupomania.</p>
     </footer>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 
+export default {
+  computed: {
+    ...mapState(['year', 'userId'])
+  }
+}
 </script>
 
 <style lang="scss">
+@import './sass/_variables';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #202020;
+  color: $color1;
 }
 
 #nav {
@@ -65,11 +75,11 @@
     a {
     text-align: center;
     font-weight: bold;
-    color: #202020;
+    color: $color1;
     font-size: 1.2em;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: $color2;
     }
   }
   }
