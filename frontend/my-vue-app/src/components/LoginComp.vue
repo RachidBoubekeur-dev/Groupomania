@@ -6,14 +6,14 @@
         <span class="text-danger font-weight-bold">{{ error }}</span><br />
         <div class="text-right">
           <label for="email">Email:</label><br />
-          <input type="email" name="email" v-model="email" aria-describedby="email" aria-label="Entrez votre email" placeholder="Entrez votre email" required/><br />
+          <input type="email" name="email" v-model="email" aria-describedby="email" aria-label="Votre email" placeholder="Votre email" required/><br />
           <label for="password">Mot de passe:</label><br />
-          <input type="password" name="password" v-model="password" aria-describedby="password" aria-label="Entrez votre mot de passe" placeholder="Entrez votre mot de passe" required/>
+          <input type="password" name="password" v-model="password" aria-describedby="password" aria-label="Votre mot de passe" placeholder="Votre mot de passe" required/>
         </div>
         <input type="submit" id="submit" value="Valider" />
       </form>
     </div>
-    <router-link to="/signup" class="signup">Pas encore de compte ? <strong>inscrivez-vous</strong></router-link>
+    <router-link to="/signup" class="signup">Pas encore de compte ? <strong>Inscrivez-vous</strong></router-link>
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
       // On envoie les données à l'action dans le store vuex
       this.$store.dispatch('loginUser', JSON.stringify(dataLogin))
         .then(() => { window.location.href = '/profil' })
-        .catch(erreur => { this.error = 'Identifiant incorrect' })
+        .catch(() => { this.error = 'Identifiant incorrect' })
     }
   }
 }
@@ -103,7 +103,7 @@ form {
   font-size: 1.1rem;
   margin-top: 0.6rem;
   &:hover{
-    color: darken($color: $color1, $amount: 0);
+    color: $color1;
   }
 }
 </style>

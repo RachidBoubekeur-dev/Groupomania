@@ -18,9 +18,25 @@ export default createStore({
         axios.post('https://jsonplaceholder.typicode.com/posts', {
           dataLogin
         })
-          // Si les données sont valide on parse et on stocke les donnés dans le localstorage sinon ont retourne une erreur
+          // Si les données sont valides ont parse et on stocke les donnés dans le localstorage sinon on retourne une erreur
           .then(response => {
             const dataUser = JSON.parse(decodeURIComponent(response.data.dataLogin))
+            localStorage.setItem('userId', dataUser.email)
+            localStorage.setItem('token', dataUser.password)
+            resolve()
+          })
+          .catch(error => { reject(error) })
+      })
+    },
+    // signupUser reçoit l'email et le password et l'envoie à api
+    signupUser (state, dataSignup) {
+      return new Promise((resolve, reject) => {
+        axios.post('https://jsonplaceholder.typicode.com/posts', {
+          dataSignup
+        })
+          // Si les données sont valides ont parse et on stocke les donnés dans le localstorage sinon on retourne une erreur
+          .then(response => {
+            const dataUser = JSON.parse(decodeURIComponent(response.data.dataSignup))
             localStorage.setItem('userId', dataUser.email)
             localStorage.setItem('token', dataUser.password)
             resolve()
