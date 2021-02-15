@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="form-check">
+      <p>{{$store.state.user[0].userId}}</p>
     </div>
   </div>
 </template>

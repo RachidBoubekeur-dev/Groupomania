@@ -18,7 +18,7 @@
                 <li class="nav-item">
                   <router-link to="/article" class="nav-link">Article</router-link>
                 </li>
-                <li class="nav-item position-md-absolute right-2" v-if="userId !== null">
+                <li class="nav-item position-md-absolute right-2" v-if="user[0].userId !== null">
                   <router-link to="/profil" class="nav-link">Profil</router-link>
                 </li>
                 <li class="nav-item position-md-absolute right-2" v-else>
@@ -42,7 +42,7 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['year', 'userId'])
+    ...mapState(['year', 'user'])
   }
 }
 </script>
