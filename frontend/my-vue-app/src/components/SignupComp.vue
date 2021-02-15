@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <div class="jumbotron p-4 p-md-5">
+  <div class="row">
+    <div class="jumbotron p-4 p-md-5 col-xs-12 col-sm-11 col-lg-8 col-xl-6">
       <h1>Inscription</h1>
       <form @submit.prevent="formSignup">
         <span class="text-danger font-weight-bold">{{ error }}</span><br />
-        <div class="text-right">
-          <label for="name">Nom d'utilisateur:</label><br />
+        <div>
+          <label for="name">Nom d'utilisateur:</label>
           <input type="text" name="name" v-model="name" aria-describedby="name" aria-label="Nom d'utilisateur" placeholder="Nom d'utilisateur" minlength="3" pattern="^[a-z ,.'-éèàâêûîôäëüïöù][^0-9]+$" required/><br />
-          <label for="email">Email:</label><br />
+          <label for="email">Email:</label>
           <input type="email" name="email" v-model="email" aria-describedby="email" aria-label="Votre email" placeholder="Votre email" minlength="6" required/><br />
-          <label for="password">Mot de passe:</label><br />
+          <label for="password">Mot de passe:</label>
           <input type="password" name="password" v-model="password" aria-describedby="password" aria-label="Votre mot de passe" placeholder="Votre mot de passe" minlength="8" required/>
         </div>
         <input type="submit" id="submit" value="Valider" />
@@ -76,8 +76,7 @@ h1{
 
 form {
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+
   label {
     font-weight: bold;
     font-size: 1rem;
@@ -111,6 +110,11 @@ form {
   }
 }
 
+div:nth-child(3) {
+  width: fit-content;
+  text-align: right;
+}
+
 .signup {
   text-decoration: underline;
   color: $color3;
@@ -118,6 +122,13 @@ form {
   margin-top: 0.15rem;
   &:hover{
     color: $color1;
+  }
+}
+
+@media screen and (max-width: 438px) {
+  div:nth-child(3) {
+    margin-right: 13%;
+    margin-left: 13%;
   }
 }
 </style>

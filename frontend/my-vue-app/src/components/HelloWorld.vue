@@ -2,7 +2,7 @@
   <div>
     <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania">
     <h1>Bienvenue au réseau social interne de l'entreprise 😄</h1>
-    <h2>Le but de cet outil est de faciliter les interactions entre collègues alors faite vous plaîsirs 🥳</h2>
+    <h2>Le but de cet outil est de faciliter les interactions entre collègues alors faites vous plaîsirs 🥳</h2>
   </div>
 </template>
 

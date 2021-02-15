@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <div class="jumbotron p-4 p-md-5">
+  <div class="row">
+    <div class="jumbotron p-4 p-md-5 col-xs-12 col-sm-10 col-lg-7 col-xl-6">
       <h1>Connexion</h1>
       <form @submit.prevent="formLogin">
         <span class="text-danger font-weight-bold">{{ error }}</span><br />
-        <div class="text-right">
-          <label for="email">Email:</label><br />
+        <div>
+          <label for="email">Email:</label>
           <input type="email" name="email" v-model="email" aria-describedby="email" aria-label="Votre email" placeholder="Votre email" required/><br />
-          <label for="password">Mot de passe:</label><br />
+          <label for="password">Mot de passe:</label>
           <input type="password" name="password" v-model="password" aria-describedby="password" aria-label="Votre mot de passe" placeholder="Votre mot de passe" required/>
         </div>
         <input type="submit" id="submit" value="Valider" />
@@ -62,8 +62,6 @@ div:nth-child(1) {
 
 form {
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
   label {
     font-weight: bold;
     font-size: 1rem;
@@ -76,6 +74,7 @@ form {
     border: 2px solid $color1;
     border-radius: 2px;
     height: 35px;
+    outline: none;
   }
 
   #submit {
@@ -97,6 +96,11 @@ form {
   }
 }
 
+div:nth-child(3) {
+  width: fit-content;
+  text-align: right;
+}
+
 .signup {
   text-decoration: underline;
   color: $color3;
@@ -104,6 +108,13 @@ form {
   margin-top: 0.6rem;
   &:hover{
     color: $color1;
+  }
+}
+
+@media screen and (max-width: 438px) {
+  div:nth-child(3) {
+    margin-right: 13%;
+    margin-left: 13%;
   }
 }
 </style>
