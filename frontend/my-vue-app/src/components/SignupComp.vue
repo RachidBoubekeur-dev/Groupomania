@@ -76,7 +76,6 @@ h1{
 
 form {
   text-align: center;
-
   label {
     font-weight: bold;
     font-size: 1rem;
@@ -124,7 +123,6 @@ div:nth-child(3) {
     color: $color1;
   }
 }
-
 @media screen and (max-width: 438px) {
   div:nth-child(3) {
     margin-right: 13%;
