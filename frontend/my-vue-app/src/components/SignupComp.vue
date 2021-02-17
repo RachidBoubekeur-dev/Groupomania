@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     formSignup () {
+      this.$store.state.load = true
       if (this.name.length >= 3 && this.regex.test(this.name)) {
         if (this.email.length >= 6 && this.regexEmail.test(this.email)) {
           if (this.password.length >= 8) {
@@ -45,7 +46,10 @@ export default {
             // On envoie les données à l'action dans le store vuex
             this.$store.dispatch('signupUser', JSON.stringify(dataSignup))
               .then(() => { window.location.href = '/profil' })
-              .catch(err => { this.error = err })
+              .catch(err => {
+                this.$store.state.load = false
+                this.error = err
+              })
           }
         }
       }
@@ -65,13 +69,14 @@ div:nth-child(1) {
 .jumbotron {
   text-align: center;
   border: 3px solid $color1;
+  border-radius: 11px;
   background-color: rgb(255, 255, 255);
   margin: auto;
   padding-top: 2rem !important;
 }
 
 h1{
-  margin-bottom: -1rem;
+  margin-bottom: 1rem;
 }
 
 form {
@@ -95,7 +100,7 @@ form {
     background-color: $color1;
     color: white;
     border: none;
-    margin-top: 1.5rem;
+    margin-top: 2.5rem;
     width: 100px;
     cursor: pointer;
     outline: none;

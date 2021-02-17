@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="jumbotron p-4 p-md-5 col-xs-12 col-sm-10 col-lg-7 col-xl-6">
+    <div class="jumbotron p-4 p-md-5 col-xs-12 col-sm-10 col-lg-7 col-xl-5">
       <h1>Connexion</h1>
       <form @submit.prevent="formLogin">
         <span class="text-danger font-weight-bold">{{ error }}</span><br />
@@ -18,8 +18,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
-
 export default {
   name: 'LoginComp',
   data () {
@@ -31,6 +29,7 @@ export default {
   },
   methods: {
     formLogin () {
+      this.$store.state.load = true
       const dataLogin = {
         email: encodeURIComponent(this.email),
         password: encodeURIComponent(this.password)
@@ -38,7 +37,10 @@ export default {
       // On envoie les données à l'action dans le store vuex
       this.$store.dispatch('loginUser', JSON.stringify(dataLogin))
         .then(() => { window.location.href = '/profil' })
-        .catch(() => { this.error = 'Identifiant incorrect' })
+        .catch(() => {
+          this.$store.state.load = false
+          this.error = 'Identifiant incorrect'
+        })
     }
   }
 }
@@ -55,6 +57,7 @@ div:nth-child(1) {
 .jumbotron {
   text-align: center;
   border: 3px solid $color1;
+  border-radius: 11px;
   background-color: rgb(255, 255, 255);
   margin: auto;
   padding-top: 2rem !important;
@@ -81,8 +84,7 @@ form {
     background-color: $color1;
     color: white;
     border: none;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
     width: 100px;
     cursor: pointer;
     outline: none;

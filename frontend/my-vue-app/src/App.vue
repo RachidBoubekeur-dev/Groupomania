@@ -2,8 +2,8 @@
   <div>
     <header>
         <nav id="nav" class="navbar navbar-expand-md navbar-light bg-white">
-          <router-link to="/" class="mr-md-5"><img src="./assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" /></router-link>
-          <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+          <router-link to="/"><img src="./assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" /></router-link>
+          <button class="navbar-toggler m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
               aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -11,9 +11,6 @@
             <ul class="nav justify-content-center">
                 <li class="nav-item">
                   <router-link to="/" class="nav-link active">Home</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/chat" class="nav-link">Chat</router-link>
                 </li>
                 <li class="nav-item">
                   <router-link to="/article" class="nav-link">Article</router-link>
@@ -31,9 +28,9 @@
     <main class="container">
       <router-view />
     </main>
-    <footer>
-      <p class="fixed-bottom font-weight-bold">© {{ year }} Groupomania.</p>
-    </footer>
+    <div v-if="load" class="spinner-border text-success fixed-bottom m-2" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </template>
 
@@ -42,7 +39,7 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['year', 'user'])
+    ...mapState(['load', 'user'])
   }
 }
 </script>
@@ -67,6 +64,8 @@ export default {
   img {
     text-align: left;
     width: 200px;
+    margin-left: 0.5rem;
+    margin-right: 1.5rem;
   }
 
   li {

@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    year: (new Date()).getFullYear(),
+    load: false,
     user: [{
       userId: localStorage.getItem('userId'),
       token: localStorage.getItem('token')
@@ -41,6 +41,17 @@ export default createStore({
             localStorage.setItem('token', dataUser.password)
             resolve()
           })
+          .catch(error => { reject(error) })
+      })
+    },
+    // deleteUser reçoit reçoit la demande et envoie à api l'userId
+    deleteUser (state) {
+      const userId = JSON.stringify(this.state.user[0].userId)
+      return new Promise((resolve, reject) => {
+        axios.post('https://jsonplaceholder.typicode.com/posts', {
+          userId
+        })
+          .then(() => { resolve() })
           .catch(error => { reject(error) })
       })
     }

@@ -7,17 +7,34 @@
         <p class="mr-5">Rachid Boubekeur</p>
         <p>rachidboubekeur@free.fr</p>
       </div>
-      <form enctype="multipart/form-data">
-        <button class="mr-5">Modifier ma photo de profil</button>
-        <button>Supprimer mon compte</button>
-      </form>
+      <span class="text-danger font-weight-bold">{{ error }}</span><br />
+      <button @click="deleteUser">Supprimer mon compte</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ProfilComp'
+  name: 'ProfilComp',
+  data () {
+    return {
+      error: null
+    }
+  },
+  methods: {
+    deleteUser () {
+      this.$store.state.load = true
+      this.$store.dispatch('deleteUser')
+        .then(() => {
+          localStorage.clear()
+          window.location.href = '/'
+        })
+        .catch(() => {
+          this.$store.state.load = false
+          this.error = 'La suppression de votre compte a échoué'
+        })
+    }
+  }
 }
 </script>
 
@@ -30,6 +47,7 @@ div:nth-child(1) {
 .jumbotron {
   text-align: center;
   border: 3px solid $color1;
+  border-radius: 11px;
   background-color: rgb(255, 255, 255);
   margin: auto;
   padding-top: 2rem !important;
@@ -48,12 +66,16 @@ img {
   text-align: center;
   p {
     font-weight: bold;
+    margin-left: 1rem;
+    margin-right: 1rem;
     font-size: 1.3rem;
     display: inline-block;
+    overflow-wrap: anywhere;
   }
 }
 
 button {
+  margin-top: 10px;
   background-color: $color1;
   height: 32px;
   border: 2px solid $color1;
