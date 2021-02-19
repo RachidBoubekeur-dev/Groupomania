@@ -6,7 +6,9 @@ export default createStore({
     load: false,
     user: [{
       userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token')
+      token: localStorage.getItem('token'),
+      name: localStorage.getItem('name'),
+      email: localStorage.getItem('email')
     }]
   },
   mutations: {
@@ -15,43 +17,51 @@ export default createStore({
     // loginUser reçoit l'email et le password et l'envoie à api
     loginUser (state, dataLogin) {
       return new Promise((resolve, reject) => {
-        axios.post('https://jsonplaceholder.typicode.com/posts', {
+        axios.post('http://localhost:3000/api/auth/login', {
           dataLogin
         })
-          // Si les données sont valides ont parse et on stocke les donnés dans le localstorage sinon on retourne une erreur
+          // Si les données sont valides on les stocke dans le localstorage sinon on retourne une erreur
           .then(response => {
-            const dataUser = JSON.parse(decodeURIComponent(response.data.dataLogin))
-            localStorage.setItem('userId', dataUser.email)
-            localStorage.setItem('token', dataUser.password)
-            resolve()
+            const dataUser = response.data
+            localStorage.setItem('userId', dataUser.userId)
+            localStorage.setItem('token', dataUser.token)
+            localStorage.setItem('name', decodeURIComponent(dataUser.name))
+            localStorage.setItem('email', decodeURIComponent(dataUser.email))
+            resolve(response)
           })
           .catch(error => { reject(error) })
       })
     },
-    // signupUser reçoit l'email et le password et l'envoie à api
+    // signupUser reçoit le nom d'utilisateur, l'email et le password et l'envoie à api
     signupUser (state, dataSignup) {
       return new Promise((resolve, reject) => {
-        axios.post('https://jsonplaceholder.typicode.com/posts', {
+        axios.post('http://localhost:3000/api/auth/signup', {
           dataSignup
         })
-          // Si les données sont valides ont parse et on stocke les donnés dans le localstorage sinon on retourne une erreur
+          // Si les données sont valides on retourne une response sinon on retourne une erreur
           .then(response => {
-            const dataUser = JSON.parse(decodeURIComponent(response.data.dataSignup))
-            localStorage.setItem('userId', dataUser.email)
-            localStorage.setItem('token', dataUser.password)
-            resolve()
+            resolve(response)
           })
           .catch(error => { reject(error) })
       })
     },
     // deleteUser reçoit reçoit la demande et envoie à api l'userId
-    deleteUser (state) {
-      const userId = JSON.stringify(this.state.user[0].userId)
+    deleteUser (state, userId) {
       return new Promise((resolve, reject) => {
-        axios.post('https://jsonplaceholder.typicode.com/posts', {
-          userId
+        axios({
+          method: 'delete',
+          url: 'http://localhost:3000/api/auth/profil',
+          data: {
+            userId
+          },
+          headers: {
+            authorization: 'Bearer ' + this.state.user[0].token
+          }
         })
-          .then(() => { resolve() })
+          .then(response => {
+            localStorage.clear()
+            resolve(response)
+          })
           .catch(error => { reject(error) })
       })
     }

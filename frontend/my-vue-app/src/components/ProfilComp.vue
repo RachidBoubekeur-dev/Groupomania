@@ -4,8 +4,8 @@
       <h1>Mon Profil</h1>
       <span><img src="../assets/profil/default.png" alt="Image user" /></span>
       <div class="divDataUser">
-        <p class="mr-5">Rachid Boubekeur</p>
-        <p>rachidboubekeur@free.fr</p>
+        <p class="mr-5">{{ user[0].name }}</p>
+        <p>{{ user[0].email }}</p>
       </div>
       <span class="text-danger font-weight-bold">{{ error }}</span><br />
       <button @click="deleteUser">Supprimer mon compte</button>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'ProfilComp',
   data () {
@@ -24,9 +25,8 @@ export default {
   methods: {
     deleteUser () {
       this.$store.state.load = true
-      this.$store.dispatch('deleteUser')
+      this.$store.dispatch('deleteUser', this.$store.state.user[0].userId)
         .then(() => {
-          localStorage.clear()
           window.location.href = '/'
         })
         .catch(() => {
@@ -34,6 +34,9 @@ export default {
           this.error = 'La suppression de votre compte a échoué'
         })
     }
+  },
+  computed: {
+    ...mapState(['user'])
   }
 }
 </script>

@@ -35,11 +35,15 @@ export default {
         password: encodeURIComponent(this.password)
       }
       // On envoie les données à l'action dans le store vuex
-      this.$store.dispatch('loginUser', JSON.stringify(dataLogin))
+      this.$store.dispatch('loginUser', dataLogin)
         .then(() => { window.location.href = '/profil' })
-        .catch(() => {
+        .catch(error => {
           this.$store.state.load = false
-          this.error = 'Identifiant incorrect'
+          if (error !== 'Connexion impossible') {
+            this.error = 'Identifiant incorrect'
+          } else {
+            this.error = error
+          }
         })
     }
   }

@@ -6,11 +6,11 @@
         <span class="text-danger font-weight-bold">{{ error }}</span><br />
         <div>
           <label for="name">Nom d'utilisateur:</label>
-          <input type="text" name="name" v-model="name" aria-describedby="name" aria-label="Nom d'utilisateur" placeholder="Nom d'utilisateur" minlength="3" pattern="^[a-z ,.'-éèàâêûîôäëüïöù][^0-9]+$" required/><br />
+          <input type="text" name="name" v-model="name" aria-describedby="name" aria-label="Nom d'utilisateur" placeholder="Nom d'utilisateur" minlength="3" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù][^0-9]+$" required/><br />
           <label for="email">Email:</label>
-          <input type="email" name="email" v-model="email" aria-describedby="email" aria-label="Votre email" placeholder="Votre email" minlength="6" required/><br />
+          <input type="email" name="email" v-model="email" aria-describedby="email" aria-label="Votre email" placeholder="Votre email" minlength="6" maxlength="50" required/><br />
           <label for="password">Mot de passe:</label>
-          <input type="password" name="password" v-model="password" aria-describedby="password" aria-label="Votre mot de passe" placeholder="Votre mot de passe" minlength="8" required/>
+          <input type="password" name="password" v-model="password" aria-describedby="password" aria-label="Votre mot de passe" placeholder="Votre mot de passe" minlength="8" maxlength="100" required/>
         </div>
         <input type="submit" id="submit" value="Valider" />
       </form>
@@ -35,20 +35,32 @@ export default {
   methods: {
     formSignup () {
       this.$store.state.load = true
-      if (this.name.length >= 3 && this.regex.test(this.name)) {
-        if (this.email.length >= 6 && this.regexEmail.test(this.email)) {
-          if (this.password.length >= 8) {
+      if (this.name.length >= 3 && this.name.length <= 50 && this.regex.test(this.name)) {
+        if (this.email.length >= 6 && this.name.length <= 50 && this.regexEmail.test(this.email)) {
+          if (this.password.length >= 8 && this.name.length <= 100) {
             const dataSignup = {
               name: encodeURIComponent(this.name),
               email: encodeURIComponent(this.email),
               password: encodeURIComponent(this.password)
             }
-            // On envoie les données à l'action dans le store vuex
-            this.$store.dispatch('signupUser', JSON.stringify(dataSignup))
-              .then(() => { window.location.href = '/profil' })
-              .catch(err => {
+            // On envoie les données à l'action signupUser dans le store vuex
+            this.$store.dispatch('signupUser', dataSignup)
+              .then(() => {
+                // Si c'est valider on envoie les données à l'action loginUser dans le store vuex
+                this.$store.dispatch('loginUser', dataSignup)
+                  .then(() => { window.location.href = '/profil' })
+                  .catch(() => {
+                    this.$store.state.load = false
+                    this.error = 'Votre inscription n\'a pas pu être effectuée'
+                  })
+              })
+              .catch(error => {
                 this.$store.state.load = false
-                this.error = err
+                if (error !== 'Votre inscription n\'a pas pu être effectuée') {
+                  this.error = 'Cet email est déjà utilisé'
+                } else {
+                  this.error = error
+                }
               })
           }
         }
