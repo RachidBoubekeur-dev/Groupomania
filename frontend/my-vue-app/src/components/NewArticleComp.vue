@@ -1,20 +1,15 @@
 <template>
   <div>
-      <div class="borderTop" v-if="user[0].userId !== null">
-          <router-link to="/article/new"><i class="fas fa-plus"></i> Ajouter un article</router-link>
+      <div class="borderTop">
+          <router-link to="/article/share"><i class="fas fa-plus"></i> Partager un article</router-link>
       </div>
-      <h2>Article</h2>
+      <h2>Ajouter un article</h2>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
-  name: 'ArticleComp',
-  computed: {
-    ...mapState(['user'])
-  }
+  name: 'NewArticleComp'
 }
 </script>
 

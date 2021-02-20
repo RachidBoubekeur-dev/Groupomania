@@ -3,7 +3,7 @@ const db = require('./config/database');
 const rateLimit = require("express-rate-limit");
 const bodyParse = require('body-parser');
 const helmet = require('helmet');
-// const articleRoutes = require('./routes/article');
+const articleRoutes = require('./routes/article');
 const userRoutes = require('./routes/user');
 
 try {
@@ -17,12 +17,12 @@ try {
 const app = express();
 
 // Limite les demandes répétées à  l'API 
-// const limiter = rateLimit({
-//     windowMs: 15 * 60 * 1000, // 15 minutes
-//     max: 100 // limit each IP to 100 requests per windowMs
-// });
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
 
-// app.use(limiter);
+app.use(limiter);
 
 // Analyser les corps de requête entrants dans un middleware
 app.use(bodyParse.urlencoded({ extended: true }));
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 // Sécurise en définissant divers en-têtes HTTP
 app.use(helmet());
 
-// app.use('/api/article', articleRoutes);
+app.use('/api/article', articleRoutes);
 app.use('/api/auth', userRoutes);
 
 module.exports = app;

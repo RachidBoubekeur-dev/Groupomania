@@ -16,6 +16,22 @@ const routes = [
     component: () => import(/* webpackChunkName: "article" */ '../views/Article.vue')
   },
   {
+    path: '/article/new',
+    name: 'Ajouter un article',
+    // route level code-splitting
+    // this generates a separate chunk (article.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "article" */ '../views/NewArticle.vue')
+  },
+  {
+    path: '/article/share',
+    name: 'Partager un article',
+    // route level code-splitting
+    // this generates a separate chunk (article.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "article" */ '../views/ShareArticle.vue')
+  },
+  {
     path: '/profil',
     name: 'Profil',
     // route level code-splitting
@@ -38,6 +54,10 @@ const routes = [
     // this generates a separate chunk (login.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+  },
+  {
+    path: '/*',
+    redirect: '/'
   }
 ]
 

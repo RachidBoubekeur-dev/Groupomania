@@ -39,9 +39,7 @@ export default createStore({
           dataSignup
         })
           // Si les données sont valides on retourne une response sinon on retourne une erreur
-          .then(response => {
-            resolve(response)
-          })
+          .then(response => { resolve(response) })
           .catch(error => { reject(error) })
       })
     },
@@ -62,6 +60,24 @@ export default createStore({
             localStorage.clear()
             resolve(response)
           })
+          .catch(error => { reject(error) })
+      })
+    },
+    // shareArticle reçoit le titre et le lien de l'article et l'envoie à api
+    shareArticle (state, dataArticle) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'post',
+          url: 'http://localhost:3000/api/article/share',
+          data: {
+            dataArticle
+          },
+          headers: {
+            authorization: 'Bearer ' + this.state.user[0].token
+          }
+        })
+          // Si les données sont valides on retourne une response sinon on retourne une erreur
+          .then(response => { resolve(response) })
           .catch(error => { reject(error) })
       })
     }
