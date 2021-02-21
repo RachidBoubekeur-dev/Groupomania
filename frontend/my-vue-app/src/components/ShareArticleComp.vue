@@ -9,9 +9,9 @@
         <form class="row g-3 needs-validation" @submit.prevent="formShareArticle">
         <div class="col-11 col-md-9 col-lg-7">
           <label for="titre" class="form-label">Titre:</label>
-          <input type="text" v-model="title" class="form-control" aria-describedby="titre" aria-label="Titre de l'article" placeholder="Titre de l'article" name="titre" minlength="5" maxlength="250" pattern="^[a-z ,.'-éèàâêûîôäëüïöù]+$" required /><br />
+          <input type="text" v-model="title" class="form-control" aria-describedby="titre" aria-label="Titre de l'article" placeholder="Titre de l'article" name="titre" minlength="5" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù]+$" required /><br />
           <label for="link" class="form-label">Lien:</label>
-          <input type="url" v-model="link" class="form-control" aria-describedby="link" aria-label="Lien de l'article" placeholder="Lien de l'article" name="link" minlength="10" maxlength="500" required />
+          <input type="url" v-model="link" class="form-control" aria-describedby="link" aria-label="Lien de l'article" placeholder="Lien de l'article" name="link" minlength="10" maxlength="200" required />
           </div>
         <div class="col-12">
           <button class="btn btn-success" type="submit">Valider</button>
@@ -35,8 +35,8 @@ export default {
   methods: {
     formShareArticle () {
       this.$store.state.load = true
-      if (this.title.length >= 5 && this.title.length <= 250 && this.regex.test(this.title)) {
-        if (this.link.length >= 10 && this.link.length <= 500) {
+      if (this.title.length >= 5 && this.title.length <= 50 && this.regex.test(this.title)) {
+        if (this.link.length >= 10 && this.link.length <= 200) {
           const dataArticle = {
             userId: this.$store.state.user[0].userId,
             title: encodeURIComponent(this.title),
@@ -114,29 +114,30 @@ h2 {
 }
 
 form {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    div:nth-child(1) {
-        text-align: justify;
-        label {
-            font-weight: bold;
-            font-size: 1.4rem;
-            color: #383838;
-            margin-right: 1rem;
-        }
-        input {
-            display: inline-block;
-            margin-bottom: 2rem;
-            &:focus {
-                border-color: rgba(66, 185, 131, 0.5);
-                box-shadow: 0 0 0 0.25rem rgba(66, 185, 131, 0.5);
-            }
-        }
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  div:nth-child(1) {
+    text-align: justify;
+    label {
+      font-weight: bold;
+      font-size: 1.4rem;
+      color: #383838;
+      margin-right: 1rem;
     }
-    button {
-        width: 100px;
-        font-size: 1.1rem;
+    input {
+      display: inline-block;
+      margin-bottom: 2rem;
+      &:focus {
+        border-color: rgba(66, 185, 131, 0.5);
+        box-shadow: 0 0 0 0.25rem rgba(66, 185, 131, 0.5);
+      }
     }
+  }
+  button {
+    width: 100px;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
 }
 </style>

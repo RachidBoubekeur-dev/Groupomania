@@ -51,8 +51,7 @@ exports.login = (req, res) => {
                         userId: dataUser[0].id,
                         token: jwt.sign(
                             { userId: dataUser[0].id },
-                            'RANDOM_TOKEN_SECRET_GROUPOMANIA_P7_OPEN_CLASSROOMS',
-                            { expiresIn: '24h' }
+                            'RANDOM_TOKEN_SECRET_GROUPOMANIA_P7_OPEN_CLASSROOMS'
                         ),
                         name: dataUser[0].name,
                         email: req.body.dataLogin.email

@@ -3,6 +3,9 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const articleCtrl = require('../controllers/article');
 
+router.post('/new', auth, articleCtrl.newArticle);
 router.post('/share', auth, articleCtrl.shareArticle);
+router.get('/:id', articleCtrl.getOneArticle);
+router.get('/', articleCtrl.getArticle);
 
 module.exports = router;

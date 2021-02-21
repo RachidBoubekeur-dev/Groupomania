@@ -80,6 +80,42 @@ export default createStore({
           .then(response => { resolve(response) })
           .catch(error => { reject(error) })
       })
+    },
+    // shareArticle reçoit le titre et le lien de l'article et l'envoie à api
+    newArticle (state, dataArticle) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'post',
+          url: 'http://localhost:3000/api/article/new',
+          data: {
+            dataArticle
+          },
+          headers: {
+            authorization: 'Bearer ' + this.state.user[0].token
+          }
+        })
+          // Si les données sont valides on retourne une response sinon on retourne une erreur
+          .then(response => { resolve(response) })
+          .catch(error => { reject(error) })
+      })
+    },
+    // getArticle demande à l'api de lui retourner tous les articles
+    getArticle (state) {
+      return new Promise((resolve, reject) => {
+        axios.get('http://localhost:3000/api/article/')
+          // Si les données sont retouner on retourne une response sinon on retourne une erreur
+          .then(response => { resolve(response) })
+          .catch(error => { reject(error) })
+      })
+    },
+    // getOneArticle demande à l'api de lui retourner l'article demander
+    getOneArticle (state, id) {
+      return new Promise((resolve, reject) => {
+        axios.get('http://localhost:3000/api/article/' + id)
+          // Si les données sont retouner on retourne une response sinon on retourne une erreur
+          .then(response => { resolve(response) })
+          .catch(error => { reject(error) })
+      })
     }
   },
   modules: {
