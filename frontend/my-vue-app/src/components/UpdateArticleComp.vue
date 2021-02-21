@@ -1,20 +1,20 @@
 <template>
   <div>
       <div class="borderTop">
-          <router-link to="/article/share"><i class="fas fa-plus"></i> Partager un article</router-link>
+          <router-link :to="{ name: 'View article', params: { id: article.id }}"><i class="fas fa-plus"></i> Annuler</router-link>
       </div>
       <div class="divCard col-12 col-sm-10 col-lg-9">
-        <h2>Ajouter un article</h2>
+        <h2>Modifier mon article</h2>
         <span class="text-danger font-weight-bold">{{ error }}</span>
-        <form class="row g-3 needs-validation" @submit.prevent="formNewArticle">
+        <form class="row g-3 needs-validation" @submit.prevent="formUpdateArticle">
           <div class="col-11 col-md-9 col-lg-8">
             <label for="titre" class="form-label">Titre:</label>
-            <input type="text" v-model="title" class="form-control" aria-describedby="titre" aria-label="Titre de l'article" placeholder="Titre de l'article" name="titre" minlength="5" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù]+$" required /><br />
+            <input type="text" v-model="article.title" class="form-control" aria-describedby="titre" aria-label="Titre de l'article" placeholder="Titre de l'article" name="titre" minlength="5" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù]+$" required /><br />
             <label for="content" class="form-label">Article:</label>
             <small>min 500 caractères & max 2000 caractères</small>
             <editor
             apiKey="3fe46kfdohw7u3rygxo5dc4j8yvfkod44txki5valjb7hae4"
-            v-model="content"
+            v-model="article.content"
             :init="{
               height: 200,
               menubar: false,
@@ -36,7 +36,7 @@
           </editor>
         </div>
         <div class="col-12">
-          <button class="btn btn-success" type="submit">Valider</button>
+          <button class="btn btn-warning text-white" type="submit">Modifier</button>
         </div>
       </form>
     </div>
@@ -48,34 +48,56 @@ import Editor from '@tinymce/tinymce-vue'
 import router from '../router'
 
 export default {
-  name: 'NewArticleComp',
+  name: 'UpdateArticleComp',
   components: {
     editor: Editor
   },
   data () {
     return {
-      title: null,
-      content: null,
+      article: [{
+        id: window.location.href.split('/')[5],
+        userId: null,
+        title: null,
+        content: null
+      }],
       regex: /^[a-z ,.'-éèàâêûîôäëüïöù]+$/,
       error: null
     }
   },
+  mounted () {
+    this.$store.state.load = true
+    this.$store.dispatch('getOneArticle', this.article[0].id)
+      .then(response => {
+        this.$store.state.load = false
+        this.article = response.data.response[0]
+        this.article.title = decodeURIComponent(this.article.title)
+        this.article.content = decodeURIComponent(this.article.content)
+        if (this.article.userId.toString() !== this.$store.state.user[0].userId) {
+          router.push({ name: 'Article' })
+        }
+      })
+      .catch(() => {
+        this.$store.state.load = false
+        this.error = 'Une erreur s\'est produit lors du chargement de l\'article'
+      })
+  },
   methods: {
-    formNewArticle () {
+    formUpdateArticle () {
       this.$store.state.load = true
-      if (this.title.length >= 5 && this.title.length <= 50 && this.regex.test(this.title)) {
-        if (this.content.length >= 500 && this.content.length >= 2000) {
+      if (this.article.title.length >= 5 && this.article.title.length <= 50 && this.regex.test(this.article.title)) {
+        if (this.article.content.length >= 500 && this.article.content.length >= 2000) {
           const dataArticle = {
+            id: this.article.id,
             userId: this.$store.state.user[0].userId,
-            title: encodeURIComponent(this.title),
-            content: encodeURIComponent(this.content)
+            title: encodeURIComponent(this.article.title),
+            content: encodeURIComponent(this.article.content)
           }
-          // On envoie les données à l'action newArticle dans le store vuex
-          this.$store.dispatch('newArticle', dataArticle)
-            .then(() => { router.push({ name: 'Article' }) })
+          // On envoie les données à l'action updateArticle dans le store vuex
+          this.$store.dispatch('updateArticle', dataArticle)
+            .then(() => { router.push({ path: `/article/${this.article.id}` }) })
             .catch(() => {
               this.$store.state.load = false
-              this.error = 'Votre article n\'a pas pu être publié'
+              this.error = 'Votre article n\'a pas pu être modifier'
             })
         } else {
           this.$store.state.load = false

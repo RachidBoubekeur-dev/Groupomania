@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import router from '../router'
+
 export default {
   name: 'ShareArticleComp',
   data () {
@@ -44,7 +46,7 @@ export default {
           }
           // On envoie les données à l'action shareArticle dans le store vuex
           this.$store.dispatch('shareArticle', dataArticle)
-            .then(() => { window.location.href = '/article' })
+            .then(() => { router.push({ name: 'Article' }) })
             .catch(() => {
               this.$store.state.load = false
               this.error = 'L\'article n\'a pas pu être partagé'

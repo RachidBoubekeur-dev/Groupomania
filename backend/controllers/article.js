@@ -54,3 +54,23 @@ exports.getOneArticle = (req, res) => {
         .then(response => res.status(200).json({ response }))
         .catch(error => res.status(400).json({ error }))
 }
+
+exports.updateArticle = (req, res) => {
+    // On sélectionne les données de l'article dans la table article
+    db.query('UPDATE article SET title = :title, content = :content WHERE id = :id', {
+        replacements: {
+            title: req.body.dataArticle.title,
+            content: req.body.dataArticle.content,
+            id: req.params.id
+        },
+        type: db.QueryTypes.UPDATE })
+        .then(response => res.status(200).json({ response }))
+        .catch(error => res.status(400).json({ error }))
+}
+
+exports.deleteArticle = (req, res) => {
+    // On sélectionne les données de l'article dans la table article
+    db.query('DELETE FROM article WHERE id = :id', { replacements: { id: req.params.id }, type: db.QueryTypes.DELETE })
+        .then(response => res.status(200).json({ response }))
+        .catch(error => res.status(400).json({ error }))
+}
