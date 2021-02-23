@@ -9,5 +9,6 @@ router.get('/:id', articleCtrl.getOneArticle);
 router.get('/', articleCtrl.getArticle);
 router.put('/:id', articleCtrl.updateArticle);
 router.delete('/:id', auth, articleCtrl.deleteArticle);
+router.delete('/share/:id', auth, articleCtrl.deleteArticleShare);
 
 module.exports = router;

@@ -45,7 +45,6 @@
 
 <script>
 import Editor from '@tinymce/tinymce-vue'
-import router from '../router'
 
 export default {
   name: 'NewArticleComp',
@@ -66,13 +65,12 @@ export default {
       if (this.title.length >= 5 && this.title.length <= 50 && this.regex.test(this.title)) {
         if (this.content.length >= 500 && this.content.length >= 2000) {
           const dataArticle = {
-            userId: this.$store.state.user[0].userId,
             title: encodeURIComponent(this.title),
-            content: encodeURIComponent(this.content)
+            content: encodeURIComponent(this.content.replace(/(<[^>]+>)/gi, ' ').split('&nbsp;'))
           }
           // On envoie les données à l'action newArticle dans le store vuex
           this.$store.dispatch('newArticle', dataArticle)
-            .then(() => { router.push({ name: 'Article' }) })
+            .then(() => { this.$router.push({ path: '/article' }) })
             .catch(() => {
               this.$store.state.load = false
               this.error = 'Votre article n\'a pas pu être publié'
@@ -94,6 +92,7 @@ export default {
 div:nth-child(1) {
   text-align: -webkit-center;
 }
+
 .borderTop {
   background: linear-gradient(279deg, #277a55, #309266, #369d6e,#3cad7a);
   height: 39px;
@@ -104,27 +103,27 @@ div:nth-child(1) {
   padding-right: 2.5%;
   padding-top: 2px;
   transition: all 1s;
-}
-
-a {
-  color: white;
-  position: absolute;
-  right: 2%;
-  font-size: 1.4rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    .fa-plus {
-      transition: all 3s;
-      transform: rotate(360deg);
+  a {
+    color: white !important;
+    position: absolute !important;
+    right: 2%;
+    left: auto !important;
+    font-size: 1.4rem !important;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      .fa-plus {
+        transition: all 3s;
+        transform: rotate(360deg);
+      }
     }
-  }
-  .fa-plus {
-    font-size: 1.2rem;
-    margin-right: 3.5px;
-    transition: all 3s;
-    transform: rotate(-360deg);
+    .fa-plus {
+      font-size: 1.2rem;
+      margin-right: 3.5px;
+      transition: all 3s;
+      transform: rotate(-360deg);
+    }
   }
 }
 

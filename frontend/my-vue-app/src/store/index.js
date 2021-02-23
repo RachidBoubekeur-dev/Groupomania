@@ -44,13 +44,13 @@ export default createStore({
       })
     },
     // deleteUser reçoit reçoit la demande et envoie à api l'userId
-    deleteUser (state, userId) {
+    deleteUser (state) {
       return new Promise((resolve, reject) => {
         axios({
           method: 'delete',
           url: 'http://localhost:3000/api/auth/profil',
           data: {
-            userId
+            userId: this.state.user[0].userId
           },
           headers: {
             authorization: 'Bearer ' + this.state.user[0].token
@@ -70,7 +70,8 @@ export default createStore({
           method: 'post',
           url: 'http://localhost:3000/api/article/share',
           data: {
-            dataArticle
+            dataArticle,
+            userId: this.state.user[0].userId
           },
           headers: {
             authorization: 'Bearer ' + this.state.user[0].token
@@ -88,7 +89,8 @@ export default createStore({
           method: 'post',
           url: 'http://localhost:3000/api/article/new',
           data: {
-            dataArticle
+            dataArticle,
+            userId: this.state.user[0].userId
           },
           headers: {
             authorization: 'Bearer ' + this.state.user[0].token
@@ -124,7 +126,8 @@ export default createStore({
           method: 'put',
           url: 'http://localhost:3000/api/article/' + dataArticle.id,
           data: {
-            dataArticle
+            dataArticle,
+            userId: this.state.user[0].userId
           },
           headers: {
             authorization: 'Bearer ' + this.state.user[0].token
@@ -141,6 +144,24 @@ export default createStore({
         axios({
           method: 'delete',
           url: 'http://localhost:3000/api/article/' + id,
+          data: {
+            userId: this.state.user[0].userId
+          },
+          headers: {
+            authorization: 'Bearer ' + this.state.user[0].token
+          }
+        })
+          // Si les données sont retouner on retourne une response sinon on retourne une erreur
+          .then(response => { resolve(response) })
+          .catch(error => { reject(error) })
+      })
+    },
+    // deleteArticleShare demande à l'api de supprimer l'article partager demander
+    deleteArticleShare (state, id) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'delete',
+          url: 'http://localhost:3000/api/article/share/' + id,
           data: {
             userId: this.state.user[0].userId
           },

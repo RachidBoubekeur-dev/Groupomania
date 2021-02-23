@@ -70,8 +70,7 @@ export default {
 
   li {
     right: 2%;
-
-    a {
+    & > .nav-link {
     text-align: center;
     font-weight: bold;
     color: $color1;

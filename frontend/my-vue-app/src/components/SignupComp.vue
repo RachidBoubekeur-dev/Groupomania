@@ -1,18 +1,18 @@
 <template>
   <div class="row">
-    <div class="jumbotron p-4 p-md-5 col-xs-12 col-sm-11 col-lg-8 col-xl-6">
+    <div class="divCard p-4 p-md-5 col-xs-12 col-sm-11 col-lg-8 col-xl-6">
       <h1>Inscription</h1>
       <form @submit.prevent="formSignup">
         <span class="text-danger font-weight-bold">{{ error }}</span><br />
         <div>
-          <label for="name">Nom d'utilisateur:</label>
-          <input type="text" name="name" v-model="name" aria-describedby="name" aria-label="Nom d'utilisateur" placeholder="Nom d'utilisateur" minlength="3" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù][^0-9]+$" required/><br />
-          <label for="email">Email:</label>
-          <input type="email" name="email" v-model="email" aria-describedby="email" aria-label="Votre email" placeholder="Votre email" minlength="6" maxlength="50" required/><br />
-          <label for="password">Mot de passe:</label>
-          <input type="password" name="password" v-model="password" aria-describedby="password" aria-label="Votre mot de passe" placeholder="Votre mot de passe" minlength="8" maxlength="100" required/>
+          <label class="form-label" for="name">Nom d'utilisateur:</label>
+          <input class="form-control" type="text" name="name" v-model="name" aria-describedby="name" aria-label="Nom d'utilisateur" placeholder="Nom d'utilisateur" minlength="3" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù][^0-9]+$" required/><br />
+          <label class="form-label" for="email">Email:</label>
+          <input class="form-control" type="email" name="email" v-model="email" aria-describedby="email" aria-label="Votre email" placeholder="Votre email" minlength="6" maxlength="50" required/><br />
+          <label class="form-label" for="password">Mot de passe:</label>
+          <input class=form-control type="password" name="password" v-model="password" aria-describedby="password" aria-label="Votre mot de passe" placeholder="Votre mot de passe" minlength="8" maxlength="100" required/>
         </div>
-        <input type="submit" id="submit" value="Valider" />
+        <button class="btn btn-success fw-bold mt-4" type="submit">Valider</button>
       </form>
     </div>
     <router-link to="/login" class="signup">Vous avez déjà un compte ? <strong>Connecter-vous</strong></router-link>
@@ -78,13 +78,20 @@ div:nth-child(1) {
   margin: auto;
   flex-direction: column;
 }
-.jumbotron {
+
+.divCard {
   text-align: center;
-  border: 3px solid $color1;
-  border-radius: 11px;
-  background-color: rgb(255, 255, 255);
-  margin: auto;
+  box-shadow: 0px 4px 25px -13px #9a9a9a;
   padding-top: 2rem !important;
+  margin-top: 100px;
+  border: 5px solid #494949;
+  border-radius: 17px;
+  margin: auto;
+  & > h1 {
+    font-weight: bold;
+    font-size: 2.2rem;
+    color: #383838;
+  }
 }
 
 h1{
@@ -95,34 +102,24 @@ form {
   text-align: center;
   label {
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    color: #383838;
     margin-right: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    display: inline-block;
   }
-
   input {
-    border: 2px solid $color1;
-    border-radius: 2px;
-    height: 35px;
-    outline: none;
-  }
-
-  #submit {
-    background-color: $color1;
-    color: white;
-    border: none;
-    margin-top: 2.5rem;
-    width: 100px;
-    cursor: pointer;
-    outline: none;
-    font-weight: bolder;
-    transition: all 0.4s;
-    &:hover{
-      color: $color1;
-      background-color: white;
-      border: 2px solid $color1;
+    height: 40px;
+    width: auto;
+    display: inline-block;
+    &:focus {
+      border-color: rgba(66, 185, 131, 0.5);
+      box-shadow: 0 0 0 0.25rem rgba(66, 185, 131, 0.5);
     }
+  }
+  button {
+    font-size: 1.1rem
   }
 }
 

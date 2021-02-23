@@ -9,18 +9,17 @@
     </div>
     <div class="divContent" v-if="article.content !== undefined">
         <h2>{{ decodeURIComponent(article.title) }}</h2>
-        {{ decodeURIComponent(article.content).split('<br />').join(' ') }}
+        {{ decodeURIComponent(article.content) }}
     </div>
     <div class="divButton">
         <button v-if="article.userId == user[0].userId" class="btn btn-warning"><router-link class="text-white text-decoration-none" :to="{ name: 'Modifier un article', params: { id: article.id }}">Modifier</router-link></button>
-        <button v-if="article.userId == user[0].userId || user[0].userId === 0" @click="deleteArticle" class="btn btn-danger">Supprimer</button>
+        <button v-if="article.userId == user[0].userId || user[0].userId === '0'" @click="deleteArticle" class="btn btn-danger">Supprimer</button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import router from '../router'
 
 export default {
   name: 'ViewArticleComp',
@@ -45,10 +44,11 @@ export default {
       .then(response => {
         this.$store.state.load = false
         this.article = response.data.response[0]
+        if (this.article === undefined) this.$router.push({ path: '/article' })
       })
       .catch(() => {
         this.$store.state.load = false
-        this.error = 'Une erreur s\'est produit lors du chargement de l\'article'
+        this.$router.push({ path: '/article' })
       })
   },
   methods: {
@@ -57,7 +57,7 @@ export default {
       this.$store.dispatch('deleteArticle', this.article.id)
         .then(() => {
           this.$store.state.load = false
-          router.push({ name: 'Article' })
+          this.$router.push({ name: 'Article' })
         })
         .catch(() => {
           this.$store.state.load = false

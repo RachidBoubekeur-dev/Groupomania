@@ -72,7 +72,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
-    path: '/*',
+    path: '/:pathMatch(.*)*',
     redirect: '/'
   }
 ]

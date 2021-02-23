@@ -1,14 +1,14 @@
 <template>
   <div class="row">
-    <div class="jumbotron p-4 p-md-5 col-xs-12 col-sm-11 col-lg-8">
+    <div class="divCard p-4 p-md-5 col-xs-12 col-sm-11 col-lg-8">
       <h1>Mon Profil</h1>
-      <span><img src="../assets/profil/default.png" alt="Image user" /></span>
+      <span><img src="../assets/default.png" alt="Image user" /></span>
       <div class="divDataUser">
         <p class="mr-5">{{ user[0].name }}</p>
         <p>{{ user[0].email }}</p>
       </div>
       <span class="text-danger font-weight-bold">{{ error }}</span><br />
-      <button @click="deleteUser">Supprimer mon compte</button>
+      <button class="btn btn-danger fw-bold" @click="deleteUser">Supprimer mon compte</button>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   methods: {
     deleteUser () {
       this.$store.state.load = true
-      this.$store.dispatch('deleteUser', this.$store.state.user[0].userId)
+      this.$store.dispatch('deleteUser')
         .then(() => {
           window.location.href = '/'
         })
@@ -47,13 +47,20 @@ export default {
 div:nth-child(1) {
   margin: auto;
 }
-.jumbotron {
+
+.divCard {
   text-align: center;
-  border: 3px solid $color1;
-  border-radius: 11px;
-  background-color: rgb(255, 255, 255);
-  margin: auto;
+  box-shadow: 0px 4px 25px -13px #9a9a9a;
   padding-top: 2rem !important;
+  margin-top: 100px;
+  border: 5px solid #494949;
+  border-radius: 17px;
+  margin: auto;
+  & > h1 {
+    font-weight: bold;
+    font-size: 2.2rem;
+    color: #383838;
+  }
 }
 
 img {
@@ -67,11 +74,12 @@ img {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
   text-align: center;
-  p {
+  & > p {
     font-weight: bold;
+    font-size: 1.3rem;
+    color: #383838;
     margin-left: 1rem;
     margin-right: 1rem;
-    font-size: 1.3rem;
     display: inline-block;
     overflow-wrap: anywhere;
   }
@@ -79,19 +87,5 @@ img {
 
 button {
   margin-top: 10px;
-  background-color: $color1;
-  height: 32px;
-  border: 2px solid $color1;
-  border-radius: 2.5px;
-  color: white;
-  cursor: pointer;
-  outline: none;
-  font-weight: bolder;
-  transition: all 0.4s;
-  &:hover{
-    color: $color1;
-    background-color: white;
-    border: 2px solid $color1;
-  }
 }
 </style>

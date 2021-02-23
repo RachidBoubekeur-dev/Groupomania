@@ -12,7 +12,7 @@
           <input type="text" v-model="title" class="form-control" aria-describedby="titre" aria-label="Titre de l'article" placeholder="Titre de l'article" name="titre" minlength="5" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù]+$" required /><br />
           <label for="link" class="form-label">Lien:</label>
           <input type="url" v-model="link" class="form-control" aria-describedby="link" aria-label="Lien de l'article" placeholder="Lien de l'article" name="link" minlength="10" maxlength="200" required />
-          </div>
+        </div>
         <div class="col-12">
           <button class="btn btn-success" type="submit">Valider</button>
         </div>
@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import router from '../router'
-
 export default {
   name: 'ShareArticleComp',
   data () {
@@ -40,13 +38,12 @@ export default {
       if (this.title.length >= 5 && this.title.length <= 50 && this.regex.test(this.title)) {
         if (this.link.length >= 10 && this.link.length <= 200) {
           const dataArticle = {
-            userId: this.$store.state.user[0].userId,
             title: encodeURIComponent(this.title),
             link: encodeURIComponent(this.link)
           }
           // On envoie les données à l'action shareArticle dans le store vuex
           this.$store.dispatch('shareArticle', dataArticle)
-            .then(() => { router.push({ name: 'Article' }) })
+            .then(() => { this.$router.push({ path: '/article' }) })
             .catch(() => {
               this.$store.state.load = false
               this.error = 'L\'article n\'a pas pu être partagé'
@@ -65,6 +62,7 @@ export default {
 div:nth-child(1) {
     text-align: -webkit-center;
 }
+
 .borderTop {
   background: linear-gradient(279deg, #277a55, #309266, #369d6e,#3cad7a);
   height: 39px;
@@ -75,27 +73,27 @@ div:nth-child(1) {
   padding-right: 2.5%;
   padding-top: 2px;
   transition: all 1s;
-}
-
-a {
-  color: white;
-  position: absolute;
-  right: 2%;
-  font-size: 1.4rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    .fa-plus {
-      transition: all 3s;
-      transform: rotate(360deg);
+  & > a {
+    color: white !important;
+    position: absolute !important;
+    right: 2%;
+    left: auto !important;
+    font-size: 1.4rem !important;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      .fa-plus {
+        transition: all 3s;
+        transform: rotate(360deg);
+      }
     }
-  }
-  .fa-plus {
-    font-size: 1.2rem;
-    margin-right: 3.5px;
-    transition: all 3s;
-    transform: rotate(-360deg);
+    .fa-plus {
+      font-size: 1.2rem;
+      margin-right: 3.5px;
+      transition: all 3s;
+      transform: rotate(-360deg);
+    }
   }
 }
 
@@ -106,13 +104,13 @@ h2 {
 }
 
 .divCard {
-    border-radius: 17px;
-    box-shadow: 0px 4px 25px -13px #9a9a9a;
-    padding-bottom: 61px;
-    margin-top: 100px;
-    padding-top: 55px;
-    border: 5px solid #494949;
-    margin-bottom: 12%;
+  border-radius: 17px;
+  box-shadow: 0px 4px 25px -13px #9a9a9a;
+  padding-bottom: 61px;
+  margin-top: 100px;
+  padding-top: 55px;
+  border: 5px solid #494949;
+  margin-bottom: 12%;
 }
 
 form {
@@ -121,13 +119,13 @@ form {
   margin-top: 20px;
   div:nth-child(1) {
     text-align: justify;
-    label {
+    & > label {
       font-weight: bold;
       font-size: 1.4rem;
       color: #383838;
       margin-right: 1rem;
     }
-    input {
+    & > input {
       display: inline-block;
       margin-bottom: 2rem;
       &:focus {
@@ -136,6 +134,7 @@ form {
       }
     }
   }
+
   button {
     width: 100px;
     font-size: 1.1rem;

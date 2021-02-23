@@ -45,7 +45,6 @@
 
 <script>
 import Editor from '@tinymce/tinymce-vue'
-import router from '../router'
 
 export default {
   name: 'UpdateArticleComp',
@@ -72,13 +71,11 @@ export default {
         this.article = response.data.response[0]
         this.article.title = decodeURIComponent(this.article.title)
         this.article.content = decodeURIComponent(this.article.content)
-        if (this.article.userId.toString() !== this.$store.state.user[0].userId) {
-          router.push({ name: 'Article' })
-        }
+        if (this.article.userId.toString() !== this.$store.state.user[0].userId) this.$router.push({ path: '/article' })
       })
       .catch(() => {
         this.$store.state.load = false
-        this.error = 'Une erreur s\'est produit lors du chargement de l\'article'
+        this.$router.push({ path: '/article' })
       })
   },
   methods: {
@@ -88,13 +85,12 @@ export default {
         if (this.article.content.length >= 500 && this.article.content.length >= 2000) {
           const dataArticle = {
             id: this.article.id,
-            userId: this.$store.state.user[0].userId,
             title: encodeURIComponent(this.article.title),
             content: encodeURIComponent(this.article.content)
           }
           // On envoie les données à l'action updateArticle dans le store vuex
           this.$store.dispatch('updateArticle', dataArticle)
-            .then(() => { router.push({ path: `/article/${this.article.id}` }) })
+            .then(() => { this.$router.push({ path: `/article/${this.article.id}` }) })
             .catch(() => {
               this.$store.state.load = false
               this.error = 'Votre article n\'a pas pu être modifier'
@@ -126,27 +122,27 @@ div:nth-child(1) {
   padding-right: 2.5%;
   padding-top: 2px;
   transition: all 1s;
-}
-
-a {
-  color: white;
-  position: absolute;
-  right: 2%;
-  font-size: 1.4rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    .fa-plus {
-      transition: all 3s;
-      transform: rotate(360deg);
+  & > a {
+    color: white !important;
+    position: absolute !important;
+    right: 2%;
+    left: auto !important;
+    font-size: 1.4rem !important;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      .fa-plus {
+        transition: all 3s;
+        transform: rotate(360deg);
+      }
     }
-  }
-  .fa-plus {
-    font-size: 1.2rem;
-    margin-right: 3.5px;
-    transition: all 3s;
-    transform: rotate(-360deg);
+    .fa-plus {
+      font-size: 1.2rem;
+      margin-right: 3.5px;
+      transition: all 3s;
+      transform: rotate(-360deg);
+    }
   }
 }
 
