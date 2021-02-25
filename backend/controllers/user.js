@@ -13,7 +13,7 @@ exports.signup = (req, res) => {
             db.query('SELECT COUNT(email) as number FROM user WHERE email = :email', { replacements: { email: hashEmail }, type: db.QueryTypes.SELECT })
                 .then(Email => {
                     if (Email[0].number !== 0) {
-                        res.status(401).json({ error });
+                        res.status(400).json({ error });
                     }
                     // On insère les données dans la table user
                     db.query('INSERT INTO user(name, email, password) VALUES (:name, :email, :password)', {
@@ -25,7 +25,7 @@ exports.signup = (req, res) => {
                         type: db.QueryTypes.INSERT
                     })
                         .then(response => res.status(201).json({ response }))
-                        .catch(() => res.status(401).json({ error: 'Votre inscription n\'a pas pu être effectuée' }))
+                        .catch(() => res.status(400).json({ error: 'Votre inscription n\'a pas pu être effectuée' }))
                 })
                 .catch(() => res.status(400).json({ error: 'Votre inscription n\'a pas pu être effectuée' }))
         })
@@ -57,7 +57,7 @@ exports.login = (req, res) => {
                         email: req.body.dataLogin.email
                     })
                 })
-                .catch(() => res.status(500).json({ error: 'Connexion impossible' }));
+                .catch(() => res.status(501).json({ error: 'Connexion impossible' }));
         })
         .catch(() => res.status(500).json({ error: 'Connexion impossible' }));
 }
@@ -65,6 +65,16 @@ exports.login = (req, res) => {
 exports.deleteProfil = (req, res) => {
     // On supprime l'utilisateur à partir de son id
     db.query('DELETE FROM user WHERE id = :id', { replacements: { id: req.body.userId }, type: db.QueryTypes.DELETE })
-        .then(response => res.status(200).json({ response }))
-        .catch(error => res.status(402).json({ error: req.body.userId }))
+        .then(() => {
+            // On supprime les données des articles de l'utilisateur dans la table article
+            db.query('DELETE FROM article WHERE userId = :userId', { replacements: { userId: parseInt(req.body.userId) }, type: db.QueryTypes.DELETE })
+                .then(() => {
+                    // On supprime les données des articles partager de l'utilisateur dans la table articleshare
+                    db.query('DELETE FROM articleshare WHERE userId_share = :userId', { replacements: { userId: parseInt(req.body.userId) }, type: db.QueryTypes.DELETE })
+                        .then(response => res.status(200).json({ response }))
+                        .catch(error => res.status(400).json({ error }))
+                })
+                .catch(error => res.status(400).json({ error }))
+        })
+        .catch(error => res.status(400).json({ error }))
 }

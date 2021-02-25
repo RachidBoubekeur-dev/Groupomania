@@ -14,7 +14,7 @@ export default createStore({
   mutations: {
   },
   actions: {
-    // loginUser reçoit l'email et le password et l'envoie à api
+    // loginUser reçoit l'email et le password et l'envoie à l'api
     loginUser (state, dataLogin) {
       return new Promise((resolve, reject) => {
         axios.post('http://localhost:3000/api/auth/login', {
@@ -32,7 +32,7 @@ export default createStore({
           .catch(error => { reject(error) })
       })
     },
-    // signupUser reçoit le nom d'utilisateur, l'email et le password et l'envoie à api
+    // signupUser reçoit le nom d'utilisateur, l'email et le password et l'envoie à l'api
     signupUser (state, dataSignup) {
       return new Promise((resolve, reject) => {
         axios.post('http://localhost:3000/api/auth/signup', {
@@ -43,7 +43,7 @@ export default createStore({
           .catch(error => { reject(error) })
       })
     },
-    // deleteUser reçoit reçoit la demande et envoie à api l'userId
+    // deleteUser reçoit reçoit la demande et envoie à l'api l'userId
     deleteUser (state) {
       return new Promise((resolve, reject) => {
         axios({
@@ -63,7 +63,7 @@ export default createStore({
           .catch(error => { reject(error) })
       })
     },
-    // shareArticle reçoit le titre et le lien de l'article et l'envoie à api
+    // shareArticle reçoit le titre et le lien de l'article et l'envoie à l'api
     shareArticle (state, dataArticle) {
       return new Promise((resolve, reject) => {
         axios({
@@ -82,7 +82,7 @@ export default createStore({
           .catch(error => { reject(error) })
       })
     },
-    // shareArticle reçoit le titre et le lien de l'article et l'envoie à api
+    // shareArticle reçoit le titre et le contenu de l'article et l'envoie à l'api
     newArticle (state, dataArticle) {
       return new Promise((resolve, reject) => {
         axios({
@@ -119,7 +119,7 @@ export default createStore({
           .catch(error => { reject(error) })
       })
     },
-    // deleteArticle demande à l'api de supprimer l'article demander
+    // updateArticle demande à l'api de modifier l'article demander
     updateArticle (state, dataArticle) {
       return new Promise((resolve, reject) => {
         axios({

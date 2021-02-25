@@ -38,12 +38,12 @@ exports.newArticle = (req, res) => {
 
 exports.getArticle = (req, res) => {
     // On sélectionne les données dans la table article
-    db.query('SELECT id, title FROM article ORDER BY id DESC', { type: db.QueryTypes.SELECT })
+    db.query('SELECT id, userId, title FROM article ORDER BY id DESC', { type: db.QueryTypes.SELECT })
         .then(article => {
             // On sélectionne les données dans la table articleshare
             db.query('SELECT id_share, userId_share, title_share, link_share FROM articleshare ORDER BY id_share DESC', { type: db.QueryTypes.SELECT })
                 .then(articleshare => res.status(200).json({ article, articleshare }))
-                .catch(error => res.status(401).json({ error }))
+                .catch(error => res.status(400).json({ error }))
         })
         .catch(error => res.status(400).json({ error }))
 }
@@ -61,7 +61,7 @@ exports.getOneArticle = (req, res) => {
 }
 
 exports.updateArticle = (req, res) => {
-    // On sélectionne les données de l'article dans la table article
+    // On modifie les données de l'article dans la table article
     db.query('UPDATE article SET title = :title, content = :content WHERE id = :id', {
         replacements: {
             title: req.body.dataArticle.title,

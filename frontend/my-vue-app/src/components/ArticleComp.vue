@@ -7,12 +7,14 @@
       <h2 class="text-danger mt-5">{{ error }}</h2>
       <div v-if="articles !== undefined && articlesShare.length !== 0">
         <h2>Article</h2>
-        <div class="col-12 col-sm-10 col-md-7 col-lg-6" v-for="article in articles" :key="article">
-          <router-link class="linkCard" :to="{ name: 'View article', params: { id: article.id }}">
-            <div class="cardArticle">
+        <div class="col-12 col-sm-10 col-md-7 col-lg-6" v-for="article in articles" :key="article" :id="article.id">
+          <div class="cardArticle">
+            <router-link class="linkCard" :to="{ name: 'View article', params: { id: article.id }}">
               <span>{{ decodeURIComponent(article.title) }}</span>
-            </div>
-          </router-link>
+            </router-link>
+            <router-link v-if="article.userId == user[0].userId" :to="{ name: 'Modifier un article', params: { id: article.id }}"><i class="fas fa-edit text-warning ms-3 mx-2"></i></router-link>
+            <i class="fas fa-times text-danger ms-3" @click="deleteArticle(article.id)" v-if="article.userId == user[0].userId || user[0].userId === '0'"></i>
+          </div>
         </div>
         <small>Article partager</small>
         <div class="col-12 col-sm-10 col-md-7 col-lg-6" v-for="articleShare in articlesShare" :key="articleShare" :id="articleShare.id_share">
@@ -20,7 +22,7 @@
             <a class="linkCard" :href="decodeURIComponent(articleShare.link_share)" target="_blank">
               <span>{{ decodeURIComponent(articleShare.title_share) }}</span>
             </a>
-            <i class="fas fa-times text-danger ms-3" @click="deleteArticleShare" v-if="articleShare.userId_share == user[0].userId || user[0].userId === '0'"></i>
+            <i class="fas fa-times text-danger ms-3" @click="deleteArticleShare(articleShare.id_share)" v-if="articleShare.userId_share == user[0].userId || user[0].userId === '0'"></i>
           </div>
         </div>
       </div>
@@ -41,6 +43,7 @@ export default {
     return {
       articles: [{
         id: null,
+        userId: null,
         title: null
       }],
       articlesShare: [{
@@ -66,12 +69,24 @@ export default {
       })
   },
   methods: {
-    deleteArticleShare () {
+    deleteArticle (id) {
       this.$store.state.load = true
-      this.$store.dispatch('deleteArticleShare', this.articlesShare[0].id_share)
+      this.$store.dispatch('deleteArticle', id)
         .then(() => {
           this.$store.state.load = false
-          document.getElementById(parseInt(this.articlesShare[0].id_share)).style.display = 'none'
+          document.getElementById(parseInt(id)).style.display = 'none'
+        })
+        .catch(() => {
+          this.$store.state.load = false
+          this.error = 'Une erreur s\'est produit lors de la suppression de votre article'
+        })
+    },
+    deleteArticleShare (idShare) {
+      this.$store.state.load = true
+      this.$store.dispatch('deleteArticleShare', idShare)
+        .then(() => {
+          this.$store.state.load = false
+          document.getElementById(parseInt(idShare)).style.display = 'none'
         })
         .catch(() => {
           this.$store.state.load = false
@@ -150,6 +165,16 @@ h2 {
   & > .fas {
     font-size: 22px;
     cursor: pointer;
+    &:focus {
+      outline: -webkit-focus-ring-color auto 1px;
+    }
+  }
+  & > a > .fas {
+    font-size: 19px;
+    cursor: pointer;
+    &:focus {
+      outline: -webkit-focus-ring-color auto 1px;
+    }
   }
 }
 

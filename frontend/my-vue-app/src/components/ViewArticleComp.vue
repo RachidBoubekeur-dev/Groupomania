@@ -11,10 +11,6 @@
         <h2>{{ decodeURIComponent(article.title) }}</h2>
         {{ decodeURIComponent(article.content) }}
     </div>
-    <div class="divButton">
-        <button v-if="article.userId == user[0].userId" class="btn btn-warning"><router-link class="text-white text-decoration-none" :to="{ name: 'Modifier un article', params: { id: article.id }}">Modifier</router-link></button>
-        <button v-if="article.userId == user[0].userId || user[0].userId === '0'" @click="deleteArticle" class="btn btn-danger">Supprimer</button>
-    </div>
   </div>
 </template>
 
@@ -50,20 +46,6 @@ export default {
         this.$store.state.load = false
         this.$router.push({ path: '/article' })
       })
-  },
-  methods: {
-    deleteArticle () {
-      this.$store.state.load = true
-      this.$store.dispatch('deleteArticle', this.article.id)
-        .then(() => {
-          this.$store.state.load = false
-          this.$router.push({ name: 'Article' })
-        })
-        .catch(() => {
-          this.$store.state.load = false
-          this.error = 'Une erreur s\'est produit lors de la suppression de votre article'
-        })
-    }
   }
 }
 </script>
@@ -116,16 +98,6 @@ div:nth-of-type(1) {
         margin-bottom: 3rem;
         font-weight: bold;
         text-align: center;
-    }
-  }
-  & > .divButton {
-    margin-bottom: 3rem;
-    text-align: right;
-    & > button {
-        font-size: 1.3rem;
-    }
-    & > button:nth-child(1) {
-        margin-right: 1rem;
     }
   }
 }
