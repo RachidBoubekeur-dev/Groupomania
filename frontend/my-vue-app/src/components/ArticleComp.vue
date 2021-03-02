@@ -5,7 +5,7 @@
     </div>
     <div class="divTop">
       <h2 class="text-danger mt-5">{{ error }}</h2>
-      <div v-if="articles !== undefined && articlesShare.length !== 0">
+      <div id="article">
         <h2>Article</h2>
         <div class="col-12 col-sm-10 col-md-7 col-lg-6" v-for="article in articles" :key="article" :id="article.id">
           <div class="cardArticle">
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <h2 v-else>Aucun article publié</h2>
+      <h2 id="noArticle">Aucun article publié</h2>
     </div>
   </div>
 </template>
@@ -52,6 +52,7 @@ export default {
         title_share: null,
         link_share: null
       }],
+      articlesExist: null,
       error: null
     }
   },
@@ -62,6 +63,10 @@ export default {
         this.$store.state.load = false
         this.articles = response.data.article
         this.articlesShare = response.data.articleshare
+        if (response.data.article[0] === undefined && response.data.articleshare[0] === undefined) {
+          document.querySelector('#article').style.display = 'none'
+          document.querySelector('#noArticle').style.display = 'block'
+        }
       })
       .catch(() => {
         this.error = 'Une erreur s\'est produit lors de l\'affichage d\'article'
@@ -141,6 +146,14 @@ div:nth-child(1) {
 
 .divTop {
   margin-top: 100px;
+}
+
+#article {
+  display: block;
+}
+
+#noArticle {
+  display: none;
 }
 
 h2 {
