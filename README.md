@@ -8,8 +8,6 @@ Dans le dossier backend:
 
 - npm install -g nodemon
 
-- npm install -g nodemon
-
 - npm install --save express
 
 - npm install --save express-rate-limit
