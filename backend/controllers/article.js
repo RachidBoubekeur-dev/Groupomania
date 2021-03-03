@@ -81,7 +81,7 @@ exports.deleteArticle = (req, res) => {
 }
 
 exports.deleteArticleShare = (req, res) => {
-    // On supprime les données de l'article dans la table article
+    // On supprime les données de l'article dans la table articleshare
     db.query('DELETE FROM articleshare WHERE id_share = :id', { replacements: { id: parseInt(req.params.id) }, type: db.QueryTypes.DELETE })
         .then(response => res.status(200).json({ response }))
         .catch(error => res.status(400).json({ error }))

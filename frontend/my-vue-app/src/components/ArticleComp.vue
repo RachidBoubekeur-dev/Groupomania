@@ -52,7 +52,6 @@ export default {
         title_share: null,
         link_share: null
       }],
-      articlesExist: null,
       error: null
     }
   },
