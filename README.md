@@ -1,10 +1,48 @@
 Groupomania
 
-Pour faire fonctionner l'application en local, il faut installer:
+Pour faire fonctionner l'application en local, il faut installer via le terminal:
 
-Dans le dossier backend: express, express-rate-limit, body-parser, helmet, jsonwebtoken, crypto-js, bcrypt, sequelize, mysql2, nodemon et sqlite3.
+Dans le dossier backend: 
 
-Dans le dossier frontend: installez vue 3 avec vuex et sass, vue-router, axios, vue-axios, tinymce-vue.
+- npm init (Vous pouvez utiliser les options par défaut ou les modifier si vous le souhaitez. Cependant, votre point d'entrée doit être server.js)
+
+- npm install -g nodemon
+
+- npm install -g nodemon
+
+- npm install --save express
+
+- npm install --save express-rate-limit
+
+- npm install --save body-parser
+
+- npm install --save helmet
+
+- npm install --save jsonwebtoken
+
+- npm install --save crypto-js
+
+- npm install --save bcrypt
+
+- npm install --save sequelize
+
+- npm install --save mysql2
+
+- npm install --save sqlite3
+
+Dans le dossier frontend:
+
+- npm install -g @vue/cli
+
+- vue create my-vue-app
+- Merge
+- Vue 3
+
+Dans le dossier frontend/my-vue-app:
+
+- npm install --save axios vue-axios
+
+- npm install --save "@tinymce/tinymce-vue@^4"
 
 Vous aurez besoin d'une base de données pour stocker vos données comme MySQL avec WAMP ou un autre logiciel selon votre système d'exploitation.
 
