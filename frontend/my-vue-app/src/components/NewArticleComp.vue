@@ -11,7 +11,6 @@
             <label for="titre" class="form-label">Titre:</label>
             <input type="text" v-model="title" class="form-control" aria-describedby="titre" aria-label="Titre de l'article" placeholder="Titre de l'article" name="titre" minlength="5" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù]+$" required /><br />
             <label for="content" class="form-label">Article:</label>
-            <small>min 500 caractères & max 2000 caractères</small>
             <editor
             apiKey="3fe46kfdohw7u3rygxo5dc4j8yvfkod44txki5valjb7hae4"
             v-model="content"
@@ -63,22 +62,17 @@ export default {
     formNewArticle () {
       this.$store.state.load = true
       if (this.title.length >= 5 && this.title.length <= 50 && this.regex.test(this.title)) {
-        if (this.content.length >= 500 && this.content.length >= 2000) {
-          const dataArticle = {
-            title: encodeURIComponent(this.title),
-            content: encodeURIComponent(this.content.replace(/(<[^>]+>)/gi, ' ').split('&nbsp;'))
-          }
-          // On envoie les données à l'action newArticle dans le store vuex
-          this.$store.dispatch('newArticle', dataArticle)
-            .then(() => { this.$router.push({ path: '/article' }) })
-            .catch(() => {
-              this.$store.state.load = false
-              this.error = 'Votre article n\'a pas pu être publié'
-            })
-        } else {
-          this.$store.state.load = false
-          this.error = 'Votre article doit contenir min 500 caractères & max 2000 caractères'
+        const dataArticle = {
+          title: encodeURIComponent(this.title),
+          content: encodeURIComponent(this.content.replace(/(<[^>]+>)/gi, ' ').split('&nbsp;'))
         }
+        // On envoie les données à l'action newArticle dans le store vuex
+        this.$store.dispatch('newArticle', dataArticle)
+          .then(() => { this.$router.push({ path: '/article' }) })
+          .catch(() => {
+            this.$store.state.load = false
+            this.error = 'Votre article n\'a pas pu être publié'
+          })
       }
     }
   }
