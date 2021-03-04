@@ -44,6 +44,8 @@ Dans le dossier frontend/my-vue-app:
 
 Vous aurez besoin d'une base de données pour stocker vos données comme MySQL avec WAMP ou un autre logiciel selon votre système d'exploitation.
 
+- importez le fichier groupomania.sql dans votre base de données.
+
 Vous pouvez modifier la configuration de connexion de l'application à votre base de données dans le fichier backend\config\database.js
 
 Pour lancer l'application:
