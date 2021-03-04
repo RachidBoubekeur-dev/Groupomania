@@ -11,7 +11,6 @@
             <label for="titre" class="form-label">Titre:</label>
             <input type="text" v-model="article.title" class="form-control" aria-describedby="titre" aria-label="Titre de l'article" placeholder="Titre de l'article" name="titre" minlength="5" maxlength="50" pattern="^[a-z ,.'-éèàâêûîôäëüïöù]+$" required /><br />
             <label for="content" class="form-label">Article:</label>
-            <small>min 500 caractères & max 2000 caractères</small>
             <editor
             apiKey="3fe46kfdohw7u3rygxo5dc4j8yvfkod44txki5valjb7hae4"
             v-model="article.content"
@@ -82,23 +81,18 @@ export default {
     formUpdateArticle () {
       this.$store.state.load = true
       if (this.article.title.length >= 5 && this.article.title.length <= 50 && this.regex.test(this.article.title)) {
-        if (this.article.content.length >= 500 && this.article.content.length >= 2000) {
-          const dataArticle = {
-            id: this.article.id,
-            title: encodeURIComponent(this.article.title),
-            content: encodeURIComponent(this.article.content)
-          }
-          // On envoie les données à l'action updateArticle dans le store vuex
-          this.$store.dispatch('updateArticle', dataArticle)
-            .then(() => { this.$router.push({ path: `/article/${this.article.id}` }) })
-            .catch(() => {
-              this.$store.state.load = false
-              this.error = 'Votre article n\'a pas pu être modifier'
-            })
-        } else {
-          this.$store.state.load = false
-          this.error = 'Votre article doit contenir min 500 caractères & max 2000 caractères'
+        const dataArticle = {
+          id: this.article.id,
+          title: encodeURIComponent(this.article.title),
+          content: encodeURIComponent(this.article.content)
         }
+        // On envoie les données à l'action updateArticle dans le store vuex
+        this.$store.dispatch('updateArticle', dataArticle)
+          .then(() => { this.$router.push({ path: `/article/${this.article.id}` }) })
+          .catch(() => {
+            this.$store.state.load = false
+            this.error = 'Votre article n\'a pas pu être modifier'
+          })
       }
     }
   }
