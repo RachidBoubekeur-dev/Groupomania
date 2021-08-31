@@ -1,59 +1,57 @@
-Groupomania
+![Groupomania](https://raw.githubusercontent.com/RachidBoubekeur-dev/Groupomania/5e580ed192ffc1a3e79252953a7a950f2391add5/frontend/my-vue-app/src/assets/icon-left-font-monochrome-white.svg)
+## Groupomania
 
-Pour faire fonctionner l'application en local, il faut installer via le terminal:
+## 1. General information
 
-Dans le dossier backend: 
+So Pekocko is project 7 and last of the OpenClassrooms training course of the web developers course.
+The project consists of building an internal social network for Groupomania employees.  
+The purpose of this tool is to facilitate interactions between colleagues.  
+The HR department of Groupomania gave free rein to its imagination for the functionalities of the network and imagined several bricks to promote exchanges between colleagues.
 
-- npm init (Vous pouvez utiliser les options par défaut ou les modifier si vous le souhaitez. Cependant, votre point d'entrée doit être server.js)
+## 2. Skills assessed
 
-- npm install -g nodemon
+✔️ Customize content sent to a web client.
 
-- npm install --save express
+✔️ Authenticate a user and maintain his session.
 
-- npm install --save express-rate-limit
+✔️ Manage data storage using SQL.
 
-- npm install --save body-parser
+✔️ Implement secure data storage using SQL.
 
-- npm install --save helmet
+## 3. Project
 
-- npm install --save jsonwebtoken
+### 3.1 This project uses:
 
-- npm install --save crypto-js
+-   [NodeJS](https://nodejs.org/en/)
+-   [bcrypt](https://www.npmjs.com/package/bcrypt)
+-   [body-parser](https://www.npmjs.com/package/body-parser)
+-   [express](https://expressjs.com/fr/)
+-   [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+-   [crypto-js](https://www.npmjs.com/package/crypto-js)
+-   [express-rate-limit](https://www.npmjs.com/package/express-rate-limit)
+-   [helmet](https://helmetjs.github.io/)
+-   [multer](https://github.com/expressjs/multer)
+-   [mysql2](https://www.npmjs.com/package/mysql2)
+-   [nodemon](https://www.npmjs.com/package/nodemon)
+-   [sequelize](https://sequelize.org/)
+-   [sqlite3](https://www.npmjs.com/package/sqlite3)
+-   [axios](https://www.npmjs.com/package/sqlite3)
+-   [core-js](https://www.npmjs.com/package/sqlite3)
+-   [form-data](https://www.npmjs.com/package/sqlite3)
+-   [vue](https://www.npmjs.com/package/sqlite3)
+-   [vue-axios](https://www.npmjs.com/package/sqlite3)
+-   [vue-router](https://www.npmjs.com/package/sqlite3)
+-   [vue3-simple-file-input](https://www.npmjs.com/package/sqlite3)
+-   [vuex](https://www.npmjs.com/package/sqlite3)
 
-- npm install --save bcrypt
+### 3.2 Launching the project
 
-- npm install --save sequelize
+1. To start, you will need to `git clone` the project on your machine via a command in your terminal: `git clone https://github.com/RachidBoubekeur-dev/Groupomania.git`.
 
-- npm install --save mysql2
+2. Still in your terminal, go to the newly created folder Groupomania.
 
-- npm install --save sqlite3
+3. In backend and frontend folder, install the packages necessary for the proper functioning of the project via the `npm install` command.
 
-Dans le dossier frontend:
+4. In the backend folder once all the dependencies are installed start the server with `node server`.
 
-- npm install -g @vue/cli
-
-- vue create my-vue-app
-- Merge
-- Vue 3
-
-Dans le dossier frontend/my-vue-app:
-
-- npm install --save axios vue-axios
-
-- npm install --save "@tinymce/tinymce-vue@^4"
-
-Vous aurez besoin d'une base de données pour stocker vos données comme MySQL avec WAMP ou un autre logiciel selon votre système d'exploitation.
-
-- importez le fichier groupomania.sql dans votre base de données.
-
-Vous pouvez modifier la configuration de connexion de l'application à votre base de données dans le fichier backend\config\database.js
-
-Pour lancer l'application:
-
-Pour activer le backend vous devez accéder au dossier: \backend 
-Et entrer la commande: nodemon serve
-
-Pour le frontend vous devez accéder au dossier: \frontend\my-vue-app
-Et entrer la commande: npm run serve
-
-Une fois le backend, le frontend et la base de données connecter, l'application est disponible à l'adresse suivante: http://localhost:8080/
+5. In the frontend folder once all the dependencies are installed start the server with `npm run serve`.
