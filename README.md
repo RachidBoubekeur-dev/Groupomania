@@ -50,8 +50,8 @@ The HR department of Groupomania gave free rein to its imagination for the funct
 
 2. Still in your terminal, go to the newly created folder Groupomania.
 
-3. In backend and frontend folder, install the packages necessary for the proper functioning of the project via the `npm install` command.
+3. In backend and frontend/my-vue-app folder, install the packages necessary for the proper functioning of the project via the `npm install` command.
 
 4. In the backend folder once all the dependencies are installed start the server with `node server`.
 
-5. In the frontend folder once all the dependencies are installed start the server with `npm run serve`.
+5. In the frontend/my-vue-app folder once all the dependencies are installed start the server with `npm run serve`.
