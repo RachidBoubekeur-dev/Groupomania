@@ -3,7 +3,7 @@
 
 ## 1. General information
 
-So Pekocko is project 7 and last of the OpenClassrooms training course of the web developers course.
+Groupomania is project 7 and last of the OpenClassrooms training course of the web developers course.
 The project consists of building an internal social network for Groupomania employees.  
 The purpose of this tool is to facilitate interactions between colleagues.  
 The HR department of Groupomania gave free rein to its imagination for the functionalities of the network and imagined several bricks to promote exchanges between colleagues.
